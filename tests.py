@@ -151,3 +151,21 @@ def test_set_correct_choices_with_invalid_id():
     question.add_choice('b', False)
     with pytest.raises(Exception):
         question.set_correct_choices([3])
+
+@pytest.fixture
+def create_question_with_multiple_choices():
+    question = Question(title='q1')
+    
+    question.add_choice('a', False)
+    question.add_choice('b', False)
+    question.add_choice('c', True)
+
+def test_add_question_with_invalid_text(create_question_with_multiple_choices):
+    with pytest.raises(Exception):
+        question.add_choice('')
+    with pytest.raises(Exception):
+        question.add_choice('a' * 100)
+
+def test_remove_choice_by_id_with_invalid_id(create_question_with_multiple_choices):
+    with pytest.raises(Exception):
+        question.remove_choice_by_id(4)
